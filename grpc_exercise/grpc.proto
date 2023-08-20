@@ -1,0 +1,12 @@
+syntax = "proto3";
+package pb;
+option go_package = "./;pb";
+
+message Cth{
+    int32 age = 1;
+    string name = 2;
+}
+
+service Serv{
+    rpc Exe(Cth) returns (Cth);
+}

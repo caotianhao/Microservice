@@ -1,0 +1,18 @@
+syntax = "proto3";
+
+package pe;
+
+option go_package = "./;pe";
+
+message City{
+    int32 ID = 1;
+    string Name = 2;
+}
+
+// 需要生成两个文件，一个是 grpc 版本的，一个不是
+// 前者只需要 protoc --go_out=./ *.proto
+// 而后者需要 protoc --go-grpc_out=./ --go-grpc_opt=require_unimplemented_servers=false *.proto
+// 来使得生成的对应的 pb.go 文件中不出现 mustEmbedUnimplementedInfoServer()
+service Info{
+    rpc Show(City) returns (City);
+}

@@ -1,0 +1,14 @@
+syntax="proto3";
+
+package g3test;
+
+option go_package = "./;g3test";
+
+message Game{
+    int32 ID = 1;
+    string Name =2;
+}
+
+service GameInfo{
+    rpc Test3(Game) returns (Game);
+}

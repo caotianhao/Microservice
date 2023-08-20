@@ -1,0 +1,49 @@
+// proto 有两个版本，默认是 2 版本，需指定 3
+syntax = "proto3";
+
+// 指定所在包的包名
+package pb;
+
+// 指定生成的 .pb.go 位置，分号前为位置，后为生成的 .pb.go 的包名
+// 使用 protoc --go_out=./ *.proto
+
+// 添加服务之后编译，在 .pb.go 中没有新加的
+// 这是因为 protobuf 在编译期间不编译服务
+// 要想使之编译，需要使用 gRPC
+// 即 protoc --go-grpc_out=./ *.proto
+option go_package = "./;pb";
+
+// 定义枚举类型
+enum Number{
+    // 枚举类型必须从 0 开始
+    Zero = 0;
+    One = 1;
+    Two = 2;
+}
+
+// 定义消息体
+message Student {
+    int32 age = 1; // 可以不从 1 开始，但不能重复，且不能使用 19000-19999
+    string name = 2;
+    People p = 3;
+    // 数组
+    repeated int32 score = 4;
+    // 枚举
+    Number n = 5;
+    // 联合体
+    oneof StuInfo{
+        string teacher = 6;
+        string class = 7;
+        string school = 8;
+    }
+}
+
+// 消息体的嵌套
+message People{
+    int32 weight = 1;
+}
+
+// 添加 rpc 服务
+service MyServName{
+    rpc Say(People) returns (Student);
+}

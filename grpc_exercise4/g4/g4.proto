@@ -1,0 +1,14 @@
+syntax = "proto3";
+
+package g4;
+
+option go_package = "./;g4";
+
+message Mota{
+    string Name = 1;
+    int32 ID = 2;
+}
+
+service Destroy{
+    rpc Zeno(Mota) returns (Mota);
+}
